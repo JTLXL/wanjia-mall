@@ -1,0 +1,19 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: item-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/wanjiamall
+    username: root
+    password: 123456
+#    不用配置数据库驱动，因为用非常智能的推断，因为url引了jdbc:mysql，
+#    看到这个地址就能知道你肯定连了mysql
+#    driver-class-name: com.mysql.jdbc.Driver
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
