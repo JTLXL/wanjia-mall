@@ -3,6 +3,9 @@ package com.wanjia.common.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
@@ -77,4 +80,42 @@ public class JsonUtils {
             return null;
         }
     }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class User {
+        String name;
+        Integer age;
+    }
+
+    public static void main(String[] args) {
+        User user = new User("Jack", 21);
+        // serialize序列化
+        String json = serialize(user);
+        System.out.println("json = " + json);
+
+        // 反序列化
+        User user1 = parse(json, User.class);
+        System.out.println("user1 = " + user1);
+
+        json = "[20, -10, 5, 15]";
+        List<Integer> list = parseList(json, Integer.class);
+        System.out.println("list = " + list);
+
+        //language=JSON
+        json = "{\"name\": \"Jack\",\"age\": \"21\"}";
+        Map<String, String> map = parseMap(json, String.class, String.class);
+        System.out.println("map = " + map);
+
+        json = "[{\"name\": \"Jack\",\"age\": \"21\"},{\"name\": \"Rose\",\"age\": \"17\"}]";
+
+        // 后面new是一个匿名内部类，也必须用匿名内部类
+        List<Map<String, String>> maps = nativeRead(json, new TypeReference<List<Map<String, String>>>() {
+        });
+        for (Map<String, String> map1 : maps) {
+            System.out.println("map1 = " + map1);
+        }
+    }
+
 }
