@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public enum ExceptionEnum {
 
-    PRICE_CANNOT_BE_NULL(400, "价格不能为空！");
+    PRICE_CANNOT_BE_NULL(400, "价格不能为空！"),
+    CATEGORY_NOT_FOUND(404, "商品分类没查到"),
+    ;
 
     /**
      * 状态吗
@@ -25,7 +27,7 @@ public enum ExceptionEnum {
      */
     private String msg;
 
-    // 这是私有构造函数类的创建对象方式
-    // private static final ExceptionEnum ff = new ExceptionEnum(200,"");
-
 }
+
+// 这是私有构造函数类的创建对象方式
+// private static final ExceptionEnum ff = new ExceptionEnum(200,"");

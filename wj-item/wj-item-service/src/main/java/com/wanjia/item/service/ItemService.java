@@ -1,6 +1,6 @@
 package com.wanjia.item.service;
 
-import com.wanjia.pojo.Item;
+import com.wanjia.item.pojo.Item;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;

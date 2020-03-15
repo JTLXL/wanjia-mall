@@ -2,7 +2,7 @@ package com.wanjia.item.web;
 
 import com.wanjia.common.enums.ExceptionEnum;
 import com.wanjia.common.exception.WjException;
-import com.wanjia.pojo.Item;
+import com.wanjia.item.pojo.Item;
 import com.wanjia.item.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

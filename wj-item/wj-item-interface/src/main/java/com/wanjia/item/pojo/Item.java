@@ -1,4 +1,4 @@
-package com.wanjia.pojo;
+package com.wanjia.item.pojo;
 
 import lombok.Data;
 
