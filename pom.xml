@@ -12,6 +12,7 @@
         <module>wj-gateway</module>
         <module>wj-item</module>
         <module>wj-common</module>
+        <module>wj-upload</module>
     </modules>
     <packaging>pom</packaging>
 
