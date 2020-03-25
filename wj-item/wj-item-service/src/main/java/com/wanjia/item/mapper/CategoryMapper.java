@@ -2,6 +2,7 @@ package com.wanjia.item.mapper;
 
 import com.wanjia.item.pojo.Category;
 import org.springframework.stereotype.Repository;
+import tk.mybatis.mapper.additional.idlist.IdListMapper;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
@@ -10,5 +11,5 @@ import tk.mybatis.mapper.common.Mapper;
  * @description
  */
 @Repository
-public interface CategoryMapper extends Mapper<Category> {
+public interface CategoryMapper extends Mapper<Category>, IdListMapper<Category, Long> {
 }

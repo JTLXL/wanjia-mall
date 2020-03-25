@@ -4,7 +4,7 @@ spring:
   application:
     name: item-service
   datasource:
-    url: jdbc:mysql://localhost:3306/wanjia
+    url: jdbc:mysql://localhost:3306/wanjia_mall
     username: root
     password: 123456
 #    不用配置数据库驱动，因为用非常智能的推断，因为url引了jdbc:mysql，
