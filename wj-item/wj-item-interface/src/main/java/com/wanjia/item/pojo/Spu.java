@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author JT.L
@@ -35,7 +36,14 @@ public class Spu {
     private Date lastUpdateTime;// 最后修改时间
 
     @Transient
-    private String cname;
-    @Transient
     private String bname;
+
+    @Transient
+    private String cname;
+
+    @Transient
+    private List<Sku> skus;
+
+    @Transient
+    private SpuDetail spuDetail;
 }
