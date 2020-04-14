@@ -21,4 +21,5 @@ public class Category {
     private Long parentId;
     private Boolean isParent;
     private Integer sort;
+
 }

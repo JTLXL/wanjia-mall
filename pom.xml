@@ -13,6 +13,7 @@
         <module>wj-item</module>
         <module>wj-common</module>
         <module>wj-upload</module>
+        <module>wj-search</module>
     </modules>
     <packaging>pom</packaging>
 
