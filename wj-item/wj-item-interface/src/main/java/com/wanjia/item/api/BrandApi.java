@@ -4,6 +4,9 @@ import com.wanjia.item.pojo.Brand;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 /**
  * @author JT.L
@@ -19,4 +22,12 @@ public interface BrandApi {
      */
     @GetMapping("brand/{id}")
     Brand queryBrandById(@PathVariable("id") Long id);
+
+    /**
+     * 根据多个id批量查询brand信息
+     * @param ids
+     * @return
+     */
+    @GetMapping("brand/list")
+    List<Brand> queryBrandByIds(@RequestParam("ids") List<Long> ids);
 }
