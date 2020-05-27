@@ -11,6 +11,8 @@ import com.wanjia.item.mapper.SpuMapper;
 import com.wanjia.item.mapper.StockMapper;
 import com.wanjia.item.pojo.*;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +47,9 @@ public class GoodsService {
 
     @Autowired
     private StockMapper stockMapper;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     public PageResult<Spu> querySpuByPage(Integer page, Integer rows, Boolean saleable, String key) {
         // 分页
@@ -89,6 +94,10 @@ public class GoodsService {
         }
     }
 
+    /**
+     * 新增商品
+     * @param spu
+     */
     @Transactional
     public void saveGoods(Spu spu) {
         // 新增spu
@@ -111,6 +120,13 @@ public class GoodsService {
         // 新增sku和库存
         saveSkuAndStock(spu);
 
+        // 发送mq消息
+        try {
+            // try起来不影响新增商品的业务逻辑
+            amqpTemplate.convertAndSend("item.insert", spu.getId());
+        }catch (AmqpException e){
+            throw new AmqpException("发送消息出错!");
+        }
     }
 
     private void saveSkuAndStock(Spu spu) {
@@ -179,6 +195,11 @@ public class GoodsService {
         return skuList;
     }
 
+    /**
+     * 修改商品
+     *
+     * @param spu
+     */
     @Transactional
     public void updateGoods(Spu spu) {
         if (spu.getId() == null) {
@@ -211,5 +232,30 @@ public class GoodsService {
         }
         // 新增sku和stock
         saveSkuAndStock(spu);
+
+        // 发送mq消息
+        amqpTemplate.convertAndSend("item.update", spu.getId());
+    }
+
+    /**
+     * 根据id查询spu信息
+     * 包括spu下的sku和spuDetail
+     *
+     * @param id
+     * @return
+     */
+    public Spu querySpuById(Long id) {
+        // 查询Spu
+        Spu spu = spuMapper.selectByPrimaryKey(id);
+        if (spu == null) {
+            throw new WjException(ExceptionEnum.GOODS_NOT_FOUND);
+        }
+
+        // 查询sku
+        spu.setSkus(querySkuBySpuId(id));
+
+        // 查询detail
+        spu.setSpuDetail(queryDetailById(id));
+        return spu;
     }
 }

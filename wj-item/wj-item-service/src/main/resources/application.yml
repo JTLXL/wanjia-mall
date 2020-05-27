@@ -7,9 +7,25 @@ spring:
     url: jdbc:mysql://localhost:3306/wanjia_mall
     username: root
     password: 123456
-#    不用配置数据库驱动，因为用非常智能的推断，因为url引了jdbc:mysql，
-#    看到这个地址就能知道你肯定连了mysql
-#    driver-class-name: com.mysql.jdbc.Driver
+  #    不用配置数据库驱动，因为用非常智能的推断，因为url引了jdbc:mysql，
+  #    看到这个地址就能知道你肯定连了mysql
+  #    driver-class-name: com.mysql.jdbc.Driver
+
+  # RabbitMQ相关配置
+  rabbitmq:
+    host: 192.168.64.3
+    username: wanjia
+    password: 123456
+    virtual-host: /wanjia
+    # AmqpTemplate相关配置
+    template:
+      retry:
+        enabled: true
+        initial-interval: 10000ms
+        max-interval: 300000ms
+        multiplier: 2
+      exchange: wj.item.exchange
+    publisher-confirms: true
 eureka:
   client:
     service-url:

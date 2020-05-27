@@ -34,8 +34,9 @@ public class SpecificationController {
 
     /**
      * 查询规格参数集合
-     * @param gid 组id
-     * @param cid 分类id
+     *
+     * @param gid       组id
+     * @param cid       分类id
      * @param searching 是否搜索
      * @return
      */
@@ -45,6 +46,17 @@ public class SpecificationController {
             @RequestParam(value = "cid", required = false) Long cid,
             @RequestParam(value = "searching", required = false) Boolean searching
     ) {
-        return ResponseEntity.ok(specService.queryParamList(gid,cid,searching));
+        return ResponseEntity.ok(specService.queryParamList(gid, cid, searching));
+    }
+
+    /**
+     * 根据cid查询规格参数组及组内参数
+     *
+     * @param cid 分类id
+     * @return
+     */
+    @GetMapping("group")
+    public ResponseEntity<List<SpecGroup>> queryListByCid(@RequestParam("cid") Long cid) {
+        return ResponseEntity.ok(specService.queryListByCid(cid));
     }
 }

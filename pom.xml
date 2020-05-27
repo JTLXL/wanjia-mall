@@ -14,6 +14,9 @@
         <module>wj-common</module>
         <module>wj-upload</module>
         <module>wj-search</module>
+        <module>wj-page</module>
+        <module>wj-sms</module>
+        <module>wj-user</module>
     </modules>
     <packaging>pom</packaging>
 

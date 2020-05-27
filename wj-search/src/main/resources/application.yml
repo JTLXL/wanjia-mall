@@ -9,6 +9,12 @@ spring:
       cluster-nodes: 192.168.64.3:9300
   jackson:
     default-property-inclusion: non_null
+  # RabbitMQ相关配置
+  rabbitmq:
+    host: 192.168.64.3
+    username: wanjia
+    password: 123456
+    virtual-host: /wanjia
 eureka:
   client:
     service-url:

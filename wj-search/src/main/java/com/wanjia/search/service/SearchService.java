@@ -318,4 +318,26 @@ public class SearchService {
         }
     }
 
+    /**
+     * 监听到[item.insert]和[item.update]消息
+     * 从索引库新增/修改商品
+     * @param spuId
+     */
+    public void createOrUpdateIndex(Long spuId) {
+        // 查询spu
+        Spu spu = goodsClient.querySpuById(spuId);
+        // 构建goods
+        Goods goods = buildGoods(spu);
+        // 存入索引库
+        repository.save(goods);
+    }
+
+    /**
+     * 监听到[item.delete]消息
+     * 从索引库删除商品
+     * @param spuId
+     */
+    public void deleteIndex(Long spuId) {
+        repository.deleteById(spuId);
+    }
 }

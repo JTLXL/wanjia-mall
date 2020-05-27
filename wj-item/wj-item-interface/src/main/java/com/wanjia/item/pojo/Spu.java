@@ -46,4 +46,5 @@ public class Spu {
 
     @Transient
     private SpuDetail spuDetail;
+
 }

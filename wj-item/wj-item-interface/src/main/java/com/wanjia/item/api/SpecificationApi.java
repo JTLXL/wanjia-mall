@@ -1,5 +1,6 @@
 package com.wanjia.item.api;
 
+import com.wanjia.item.pojo.SpecGroup;
 import com.wanjia.item.pojo.SpecParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,4 +28,14 @@ public interface SpecificationApi {
             @RequestParam(value = "cid", required = false) Long cid,
             @RequestParam(value = "searching", required = false) Boolean searching
     );
+
+    /**
+     * 根据cid查询规格参数组
+     * 以及该组下的所有规格参数信息
+     *
+     * @param cid 分类id
+     * @return
+     */
+    @GetMapping("spec/group")
+    List<SpecGroup> queryGroupByCid(@RequestParam("cid") Long cid);
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+</head>
+<body>
+<h1>
+    msg: <span th:text="${msg}"></span>
+    <br>
+    <!--欢迎您: <span th:text="${user.getName()}"></span>-->
+    欢迎您: <span th:text="${user.name}"></span> <br>
+    欢迎您: <span th:text="${user.friend.name}"></span> <br>
+    <!--内置对象的方法-->
+    当前时间: <span th:text="${#dates.format(#dates.createNow(),'yyyy-MM-dd HH:mm:ss')}"></span> <br>
+    <!--还可以调字符串自己的方法-->
+    欢迎您: <span th:text="${user.name.toUpperCase()}"></span> <br>
+</h1>
+<!--th:text是普通文本-->
+<span th:text="'<font color=\'red\'>hello</font>'"></span>
+<br>
+<!--th:utext可以处理html标签-->
+<span th:utext="'<font color=\'red\'>hello</font>'"></span>
+<hr>
+<h3>thymeleaf中的方法</h3>
+<h2><span th:text="100 * 200 + 200"></span></h2>
+<h2><span th:text="100 * 200 + 200 > 0"></span></h2>
+<hr>
+<h1>
+    <ul>
+        <li th:each="user : ${users}">
+            <span th:text="${user.name}"></span>:
+            <span th:text="${user.age}"></span>
+        </li>
+    </ul>
+</h1>
+<hr>
+<script th:inline="javascript">
+    const users = /*[[${users}]]*/ [];
+    const user = users[0];
+    console.log(users.length);
+    for (let user1 of users) {
+        console.log(user1);
+    }
+    for (let i in users) {
+        console.log(users[i]);
+    }
+    users.forEach(u => console.log(u));
+</script>
+
+</body>
+</html>
