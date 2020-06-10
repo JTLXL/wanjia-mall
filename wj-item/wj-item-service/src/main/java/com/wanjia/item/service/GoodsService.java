@@ -96,6 +96,7 @@ public class GoodsService {
 
     /**
      * 新增商品
+     *
      * @param spu
      */
     @Transactional
@@ -124,7 +125,7 @@ public class GoodsService {
         try {
             // try起来不影响新增商品的业务逻辑
             amqpTemplate.convertAndSend("item.insert", spu.getId());
-        }catch (AmqpException e){
+        } catch (AmqpException e) {
             throw new AmqpException("发送消息出错!");
         }
     }
@@ -184,14 +185,7 @@ public class GoodsService {
 
         // 查询库存
         List<Long> ids = skuList.stream().map(Sku::getId).collect(Collectors.toList());
-        List<Stock> stockList = stockMapper.selectByIdList(ids);
-        if (CollectionUtils.isEmpty(stockList)) {
-            throw new WjException(ExceptionEnum.GOODS_STOCK_NOT_FOUND);
-        }
-        // 把stock变成一个map，其key是sku的id，值是库存值
-        Map<Long, Integer> stockMap = stockList.stream()
-                .collect(Collectors.toMap(Stock::getSkuId, Stock::getStock));
-        skuList.forEach(s -> s.setStock(stockMap.get(s.getId())));
+        loadStockInSku(ids, skuList);
         return skuList;
     }
 
@@ -257,5 +251,38 @@ public class GoodsService {
         // 查询detail
         spu.setSpuDetail(queryDetailById(id));
         return spu;
+    }
+
+    /**
+     * 根据sku的id集合查询所有的sku
+     *
+     * @param ids
+     * @return
+     */
+    public List<Sku> querySkuByIds(List<Long> ids) {
+        List<Sku> skus = skuMapper.selectByIdList(ids);
+        if (CollectionUtils.isEmpty(skus)) {
+            throw new WjException(ExceptionEnum.GOODS_SKU_NOT_FOUND);
+        }
+        // 查询库存
+        loadStockInSku(ids, skus);
+        return skus;
+    }
+
+    /**
+     * 查询库存
+     * @param ids
+     * @param skus
+     */
+    private void loadStockInSku(List<Long> ids, List<Sku> skus) {
+        // 查询库存
+        List<Stock> stockList = stockMapper.selectByIdList(ids);
+        if (CollectionUtils.isEmpty(stockList)) {
+            throw new WjException(ExceptionEnum.GOODS_STOCK_NOT_FOUND);
+        }
+        // 把stock变成一个map，其key是sku的id，值是库存值
+        Map<Long, Integer> stockMap = stockList.stream()
+                .collect(Collectors.toMap(Stock::getSkuId, Stock::getStock));
+        skus.forEach(s -> s.setStock(stockMap.get(s.getId())));
     }
 }

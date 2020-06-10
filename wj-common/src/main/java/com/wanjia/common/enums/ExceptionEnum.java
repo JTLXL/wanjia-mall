@@ -33,6 +33,8 @@ public enum ExceptionEnum {
     GOODS_UPDATE_ERROR(500, "更新商品失败"),
     GOODS_ID_CANNOT_BE_NULL(400, "商品id不能为空"),
     INVALID_USER_DATA_TYPE(400, "用户数据类型无效"),
+    UNAUTHORIZED(403, "未授权"),
+    CART_NOT_FOUND(404, "购物车为空"),
     ;
 
     /**

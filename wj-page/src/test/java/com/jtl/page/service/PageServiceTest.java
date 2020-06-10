@@ -19,6 +19,6 @@ public class PageServiceTest {
     public void createHtml() {
         // 修改把所有的商品都查出来
         // 看看有没有办法直接把html写到nginx对应的目录去
-        pageService.createHtml(141L);
+        pageService.createHtml(96L);
     }
 }

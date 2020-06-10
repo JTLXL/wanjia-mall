@@ -17,6 +17,8 @@
         <module>wj-page</module>
         <module>wj-sms</module>
         <module>wj-user</module>
+        <module>wj-auth</module>
+        <module>wj-cart</module>
     </modules>
     <packaging>pom</packaging>
 
